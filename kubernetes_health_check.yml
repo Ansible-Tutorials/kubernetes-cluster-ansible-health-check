@@ -1,0 +1,20 @@
+---
+# Author: Amaury Borges Souza
+# Description: Kubernetes Cluster Health Check
+# Usage: ansible-playbook kubernetes_health_check.yml -i inventory.yml
+# Ansible_version: ansible 2.10.8
+# License: GNU General Public License
+- name: Kubernetes Cluster Health Check
+  hosts: k8s
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Checking the Kubernetes Nodes
+      shell:
+        kubectl get nodes 
+      register: results
+
+    - name: Print the Kubernetes Nodes
+      debug:
+        msg: "{{ results.stdout.split('\n') }}"
+...
